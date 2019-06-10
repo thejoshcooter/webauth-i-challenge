@@ -16,6 +16,9 @@ const db = knex(knexConfig.development);
 // import bcrypt
 const bcrypt = require('bcrypt');
 
+// import restricted middleware
+const restricted = require('./auth/restricted');
+
 // register user endpoint
 server.post('/api/register', (req, res) => {
     // res.status(200).json({ message: 'success' })
@@ -34,21 +37,14 @@ server.post('/api/register', (req, res) => {
 });
 
 // user login endpoint
-server.post('/api/login', (req, res) => {
+server.post('/api/login', restricted, (req, res) => {
     // res.status(200).json({ message: 'success' })
-    const { username, password } = req.body;
     db('users')
-    .where({ username })
-    .first()
-    .then(user => {
-        if(user && bcrypt.compareSync(password, user.password)) {
-            res.status(200).json(user)
-        } else {
-            res.status(400).json({ error: 'you shall not pass' })
-        }
+    .then(users => {
+        res.status(200).json(users)
     })
     .catch(err => {
-        res.status(404).json({ error: 'error', err })
+        res.status(404).json({ error: 'users not found', err })
     })
 });
 
