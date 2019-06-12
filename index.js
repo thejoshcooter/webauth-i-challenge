@@ -1,5 +1,5 @@
 // import server
-const server = require('./server');
+const server = require('./api/server');
 
 // implement heroku ready port
 const port = process.env.PORT || 5000
