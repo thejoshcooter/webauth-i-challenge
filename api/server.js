@@ -2,7 +2,7 @@
 const express = require('express'); // import express
 const helmet = require('helmet'); // import helmet
 const cors = require('cors'); // import cors
-const bcrypt = require('bcrypt'); // import bcrypt
+const session = require('express-session');
 
 // initialize server
 const server = express(); // implement server
